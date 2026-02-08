@@ -144,4 +144,33 @@ public class CelularDB {
             return false;
         }
     }
+
+
+// metodo para actualizar celular 
+    public boolean actualizarCelular(Celular celular) {
+        String sql = "UPDATE celulares SET marca = ?, modelo = ?, sistema_operativo = ?, " +
+                     "gama = ?, precio = ?, stock = ? WHERE id = ?";
+        
+        try (Connection conn = ConexionDB.obtenerConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, celular.getMarca().getNombre());
+            ps.setString(2, celular.getModelo());
+            ps.setString(3, celular.getSistemaOperativo());
+            ps.setString(4, celular.getGama().name());
+            ps.setDouble(5, celular.getPrecio());
+            ps.setInt(6, celular.getStock());
+            ps.setInt(7, celular.getId());
+            
+            int filas = ps.executeUpdate();
+            return filas > 0;
+            
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar celular: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+
 }

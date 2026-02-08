@@ -66,7 +66,7 @@ public class CelularControlador {
         } else {
             System.out.println("no se pudo actualizar el stock");
         }
-        
+
     }
 
     public void eliminarCelular(int id) {
@@ -79,4 +79,44 @@ public class CelularControlador {
         }
     }
 
+    public void actualizarCelular(Celular celular) {
+        
+        if (celular.getPrecio() <= 0) {
+            System.out.println("El precio debe ser mayor de 0, o lo va a regalar?");
+            return;
+        }
+        
+        if (celular.getStock() < 0) {
+            System.out.println("El stock no puede ser negativo");
+            return;
+        }
+        
+        boolean actualizado = celularDB.actualizarCelular(celular);
+        
+        if (actualizado) {
+            System.out.println("Celular actualizado con éxito");
+        } else {
+            System.out.println("No se pudo actualizar el celular");
+        }
+    }
+
+    public void mostrarCelularesStockBajo() {
+        List<Celular> todos = celularDB.obtenerCelulares();
+        
+        System.out.println("\n=== CELULARES CON STOCK BAJO (menos de 5 unidades) ===");
+        
+        // Usar Stream API (requisito del proyecto)
+        List<Celular> stockBajo = todos.stream()
+            .filter(c -> c.getStock() < 5)
+            .toList();
+        
+        if (stockBajo.isEmpty()) {
+            System.out.println("No hay celulares con stock bajo");
+        } else {
+            stockBajo.forEach(c -> 
+                System.out.println(c.getMarca().getNombre() + " " + c.getModelo() + 
+                                 " - Stock: " + c.getStock())
+            );
+        }
+    }
 }

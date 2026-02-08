@@ -15,9 +15,7 @@ public class ClienteDB {
         String sql = "INSERT INTO clientes (nombre, identificacion, correo, telefono) VALUES (?, ?, ?, ?)";
 
         try (
-
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getDocumento());
@@ -41,9 +39,7 @@ public class ClienteDB {
         String sql = "SELECT * from clientes";
 
         try (
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Cliente c = new Cliente();
@@ -73,11 +69,9 @@ public class ClienteDB {
         String sql = "SELECT * FROM clientes WHERE id = ?";
 
         try (
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-            
-                ps.setInt(1, id);
+            ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
 
@@ -108,9 +102,8 @@ public class ClienteDB {
         String sql = "DELETE FROM clientes WHERE id = ?";
 
         try (
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-                    
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, id);
 
             int filas = ps.executeUpdate();
@@ -122,6 +115,27 @@ public class ClienteDB {
 
         }
 
+    }
+
+    // actualizar cliente
+    public boolean actualizarCliente(Cliente cliente) {
+        String sql = "UPDATE clientes SET nombre = ?, identificacion = ?, correo = ?, telefono = ? WHERE id = ?";
+
+        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getDocumento());
+            ps.setString(3, cliente.getCorreo());
+            ps.setString(4, cliente.getTelefono());
+            ps.setInt(5, cliente.getId());
+
+            int filas = ps.executeUpdate();
+            return filas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("error al actualizar cliente: " + e.getMessage());
+            return false;
+        }
     }
 
 }

@@ -13,10 +13,18 @@ public class ItemVenta {
     public ItemVenta(){
     }
 
-    public ItemVenta(Celular celular, int cantidad) {
+// Constructor que calcula automáticamente el subtotal
+public ItemVenta(Celular celular, int cantidad) {
     this.celular = celular;
     this.cantidad = cantidad;
     this.subtotal = celular.getPrecio() * cantidad;
+}
+
+// Constructor con subtotal explícito (para cargar desde BD)
+public ItemVenta(Celular celular, int cantidad, double subtotal) {
+    this.celular = celular;
+    this.cantidad = cantidad;
+    this.subtotal = subtotal;
 }
 
     public Celular getCelular() {
