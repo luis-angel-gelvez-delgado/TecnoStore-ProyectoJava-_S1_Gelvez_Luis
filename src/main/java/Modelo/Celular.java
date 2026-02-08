@@ -26,8 +26,8 @@ public class Celular {
         this.modelo = modelo;
         this.sistemaOperativo = sistemaOperativo;
         this.gama = gama;
-        this.precio = precio;
-        this.stock = stock;
+        setPrecio(precio);
+        setStock(stock);
     }
 
     public int getId() {
@@ -75,6 +75,10 @@ public class Celular {
     }
 
     public void setPrecio(double precio) {
+        if (precio < 0) {
+            System.out.println("el precio no puede ser negativo");
+            return;
+        }
         this.precio = precio;
     }
 
@@ -83,6 +87,10 @@ public class Celular {
     }
 
     public void setStock(int stock) {
+        if (stock < 0) {
+            System.out.println("el precio no puede ser negativo");
+            return;
+        }
         this.stock = stock;
     }
 

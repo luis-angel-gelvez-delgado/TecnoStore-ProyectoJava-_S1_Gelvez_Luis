@@ -13,11 +13,11 @@ public class ItemVenta {
     public ItemVenta(){
     }
 
-    public ItemVenta(Celular celular, int cantidad, double subtotal) {
-        this.celular = celular;
-        this.cantidad = cantidad;
-        this.subtotal = subtotal;
-    }
+    public ItemVenta(Celular celular, int cantidad) {
+    this.celular = celular;
+    this.cantidad = cantidad;
+    this.subtotal = celular.getPrecio() * cantidad;
+}
 
     public Celular getCelular() {
         return celular;

@@ -66,7 +66,7 @@ public class CelularControlador {
         } else {
             System.out.println("no se pudo actualizar el stock");
         }
-
+        
     }
 
     public void eliminarCelular(int id) {

@@ -12,7 +12,7 @@ public class ClienteDB {
 
     // insertar cliente en la base de datos
     public boolean insertarCliente(Cliente cliente) {
-        String sql = "INSERT INTO clientes (nombre, identificacion, correo, telefono) VALUES (?, ?, ?, ?,)";
+        String sql = "INSERT INTO clientes (nombre, identificacion, correo, telefono) VALUES (?, ?, ?, ?)";
 
         try (
 

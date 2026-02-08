@@ -13,13 +13,11 @@ public class CelularDB {
 
     // metodo para insertar celulares
     public boolean insertarCelular(Celular celular) {
-        String sql = "INSERT INTO celulares (marca, modelo, sistema_operativo, gama precio, stock) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO celulares (marca, modelo, sistema_operativo, gama, precio, stock) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (
-                
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
-            
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, celular.getMarca().getNombre());
             ps.setString(2, celular.getModelo());
             ps.setString(3, celular.getSistemaOperativo());
@@ -43,9 +41,7 @@ public class CelularDB {
         String sql = "SELECT * FROM celulares";
 
         try (
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Celular c = new Celular();
@@ -55,6 +51,11 @@ public class CelularDB {
                 c.setSistemaOperativo(rs.getString("sistema_operativo"));
                 c.setPrecio(rs.getDouble("precio"));
                 c.setStock(rs.getInt("stock"));
+
+                // Cargar la marca
+                Modelo.Marca marca = new Modelo.Marca();
+                marca.setNombre(rs.getString("marca"));
+                c.setMarca(marca);
 
                 // convertir texto de la bd a enum
                 c.setGama(CategoriaGama.valueOf(rs.getString("gama")));
@@ -73,9 +74,8 @@ public class CelularDB {
 
         String sql = "SELECT * FROM celulares WHERE id = ?";
 
-        try(
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+        try (
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -88,6 +88,12 @@ public class CelularDB {
                 c.setSistemaOperativo(rs.getString("sistema_operativo"));
                 c.setPrecio(rs.getDouble("precio"));
                 c.setStock(rs.getInt("stock"));
+
+                // Cargar la marca
+                Modelo.Marca marca = new Modelo.Marca();
+                marca.setNombre(rs.getString("marca"));
+                c.setMarca(marca);
+
                 c.setGama(CategoriaGama.valueOf(rs.getString("gama")));
 
                 return c;
@@ -105,8 +111,7 @@ public class CelularDB {
         String sql = "UPDATE celulares SET stock = ? WHERE id = ?";
 
         try (
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, nuevoStock);
             ps.setInt(2, id);
@@ -122,20 +127,13 @@ public class CelularDB {
 
     }
 
-    
-    
-    
-    
-    
     // borrar celular
-    
-        public boolean eliminarCelular(int id) {
+    public boolean eliminarCelular(int id) {
 
         String sql = "DELETE FROM celulares WHERE id = ?";
 
         try (
-            Connection conn = ConexionDB.obtenerConexion();
-            PreparedStatement ps = conn.prepareStatement(sql)){
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
 
             int filas = ps.executeUpdate();
@@ -147,4 +145,3 @@ public class CelularDB {
         }
     }
 }
-

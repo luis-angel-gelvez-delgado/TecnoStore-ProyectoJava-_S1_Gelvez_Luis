@@ -20,8 +20,9 @@ public class Venta {
     public Venta(int id, Cliente cliente, LocalDate fecha, List<ItemVenta> items) {
         this.id = id;
         this.cliente = cliente;
-        this.fecha = LocalDate.now();
-        this.items = new ArrayList<>();
+        this.fecha = fecha;
+        this.items = items != null? items : new ArrayList<>();
+        calcularTotal();
     }
 
     

@@ -2,6 +2,8 @@ package Persistencia;
 
 import Modelo.ItemVenta;
 import Modelo.Venta;
+import java.util.ArrayList;
+import Modelo.Cliente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +37,7 @@ public class VentaDB {
                 idVentaGenerado = rs.getInt(1);
             }
 
-            // guardar item vendido
+            // guardar venta
             List<ItemVenta> items = venta.getItems();
 
             for (ItemVenta item : items) {
@@ -54,6 +56,35 @@ public class VentaDB {
             e.printStackTrace();
         }
 
+    }
+
+    // Método para obtener las ventas
+    public List<Venta> obtenerVentas() {
+        List<Venta> ventas = new ArrayList<>();
+        String sql = "SELECT * FROM ventas";
+
+        try (Connection conn = ConexionDB.obtenerConexion();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Venta v = new Venta();
+                v.setId(rs.getInt("id"));
+                v.setFecha(rs.getDate("fecha").toLocalDate());
+                v.setTotal(rs.getDouble("total"));
+
+                // Obtener cliente
+                ClienteDB clienteDB = new ClienteDB();
+                Cliente cliente = clienteDB.buscarPorId(rs.getInt("id_cliente"));
+                v.setCliente(cliente);
+
+                ventas.add(v);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener ventas: " + e.getMessage());
+        }
+
+        return ventas;
     }
 
 }
