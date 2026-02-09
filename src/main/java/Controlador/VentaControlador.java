@@ -114,7 +114,7 @@ public class VentaControlador {
                 });
 
         // Obtener top 3 usando Stream API
-        System.out.println("\n=== TOP 3 CELULARES MÁS VENDIDOS ===");
+        System.out.println("\n=== TOP 3 CELULARES MAS VENDIDOS ===");
 
         ventasPorCelular.entrySet().stream()
                 .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
@@ -137,7 +137,7 @@ public class VentaControlador {
 
         System.out.println("\n=== VENTAS TOTALES POR MES ===");
 
-        // Agrupar ventas por mes usando Stream API
+        // Agrupar ventas por mes usando stream api
         Map<String, Double> ventasPorMes = ventas.stream()
                 .collect(Collectors.groupingBy(
                         v -> v.getFecha().format(DateTimeFormatter.ofPattern("yyyy-MM")),
@@ -171,7 +171,7 @@ public class VentaControlador {
             writer.write("========================================\n");
             writer.write("       REPORTE DE VENTAS - TECNOSTORE\n");
             writer.write("========================================\n");
-            writer.write("Fecha de generación: " + LocalDate.now() + "\n");
+            writer.write("Fecha de generacion: " + LocalDate.now() + "\n");
             writer.write("Total de ventas: " + ventas.size() + "\n");
             writer.write("========================================\n\n");
 
@@ -191,7 +191,7 @@ public class VentaControlador {
                             + " | Subtotal: $" + String.format("%.2f", item.getSubtotal()) + "\n");
                 }
 
-                writer.write("TOTAL (con IVA): $" + String.format("%.2f", venta.getTotal()) + "\n");
+                writer.write("TOTAL (con iva): $" + String.format("%.2f", venta.getTotal()) + "\n");
                 writer.write("----------------------------------------\n\n");
 
                 totalGeneral += venta.getTotal();

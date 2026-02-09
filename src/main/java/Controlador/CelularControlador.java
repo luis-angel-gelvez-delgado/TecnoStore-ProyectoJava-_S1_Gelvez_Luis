@@ -105,7 +105,7 @@ public class CelularControlador {
         
         System.out.println("\n=== CELULARES CON STOCK BAJO (menos de 5 unidades) ===");
         
-        // Usar Stream API (requisito del proyecto)
+        // usar Stream api
         List<Celular> stockBajo = todos.stream()
             .filter(c -> c.getStock() < 5)
             .toList();

@@ -20,7 +20,7 @@ public ItemVenta(Celular celular, int cantidad) {
     this.subtotal = celular.getPrecio() * cantidad;
 }
 
-// Constructor con subtotal explícito (para cargar desde BD)
+// constructor con subtotal explícito (para cargar desde la db)
 public ItemVenta(Celular celular, int cantidad, double subtotal) {
     this.celular = celular;
     this.cantidad = cantidad;

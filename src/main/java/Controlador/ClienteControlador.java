@@ -99,14 +99,8 @@ public class ClienteControlador {
         }
     }
 
-    
-    
     public List<Cliente> obtenerListaClientes() {
-    return clienteDB.obtenerClientes();
+        return clienteDB.obtenerClientes();
+    }
+
 }
-    
-}
-
-
-
-

@@ -1,6 +1,5 @@
 package Modelo;
 
-// esto equivale a lo que en la database es la tabla "Celulares"
 public class Celular {
 
     private int id;
