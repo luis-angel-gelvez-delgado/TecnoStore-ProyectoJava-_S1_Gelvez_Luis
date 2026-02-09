@@ -230,3 +230,6 @@ public class VentaControlador {
     }
 
 }
+
+
+// este prqueria me esta dando  error a la hora subir commit, eso es nuevo jaja
