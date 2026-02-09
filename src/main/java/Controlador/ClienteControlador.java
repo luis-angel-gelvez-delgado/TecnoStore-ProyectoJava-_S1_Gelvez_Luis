@@ -13,9 +13,9 @@ public class ClienteControlador {
         clienteDB = new ClienteDB();
     }
 
-// metodo para validar o verificar  , no se como se dice, que el correo este bien  xd
+// funcion para validar que el correo este bien
     private boolean validarCorreo(String correo) {
-        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$";
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return Pattern.matches(regex, correo);
     }
 
@@ -99,4 +99,14 @@ public class ClienteControlador {
         }
     }
 
+    
+    
+    public List<Cliente> obtenerListaClientes() {
+    return clienteDB.obtenerClientes();
 }
+    
+}
+
+
+
+

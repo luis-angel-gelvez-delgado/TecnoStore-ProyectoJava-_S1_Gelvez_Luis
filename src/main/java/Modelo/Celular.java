@@ -88,7 +88,7 @@ public class Celular {
 
     public void setStock(int stock) {
         if (stock < 0) {
-            System.out.println("el precio no puede ser negativo");
+            System.out.println("el stock no puede ser negativo");
             return;
         }
         this.stock = stock;

@@ -119,4 +119,11 @@ public class CelularControlador {
             );
         }
     }
+    
+    public List<Celular> obtenerListaCelulares() {
+    return celularDB.obtenerCelulares();
 }
+}
+
+
+

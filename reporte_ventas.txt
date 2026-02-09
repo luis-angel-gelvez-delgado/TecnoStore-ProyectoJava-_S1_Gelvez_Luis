@@ -1,0 +1,84 @@
+========================================
+       REPORTE DE VENTAS - TECNOSTORE
+========================================
+Fecha de generación: 2026-02-08
+Total de ventas: 8
+========================================
+
+----------------------------------------
+Venta ID: 1
+Cliente: Carlos Rodriguez
+Fecha: 2026-02-01
+Items vendidos:
+  - Apple iPhone 15 Pro | Cantidad: 1 | Subtotal: $5900000,00
+TOTAL (con IVA): $7021000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 2
+Cliente: Ana Martinez
+Fecha: 2026-02-03
+Items vendidos:
+  - Samsung Galaxy A54 | Cantidad: 2 | Subtotal: $3600000,00
+TOTAL (con IVA): $4284000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 3
+Cliente: Luis Hernandez
+Fecha: 2026-02-05
+Items vendidos:
+  - Xiaomi 14 Pro | Cantidad: 1 | Subtotal: $4200000,00
+  - Samsung Galaxy A15 | Cantidad: 1 | Subtotal: $750000,00
+TOTAL (con IVA): $5891000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 4
+Cliente: Sofia Gomez
+Fecha: 2026-02-06
+Items vendidos:
+  - Xiaomi Redmi 13C | Cantidad: 3 | Subtotal: $1800000,00
+TOTAL (con IVA): $2142000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 5
+Cliente: Diego Ramirez
+Fecha: 2026-02-07
+Items vendidos:
+  - Samsung Galaxy S24 Ultra | Cantidad: 1 | Subtotal: $5200000,00
+TOTAL (con IVA): $6188000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 6
+Cliente: Maria Torres
+Fecha: 2026-02-08
+Items vendidos:
+  - Motorola Moto G54 | Cantidad: 2 | Subtotal: $1600000,00
+TOTAL (con IVA): $1904000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 7
+Cliente: Andres Lopez
+Fecha: 2026-01-28
+Items vendidos:
+  - Apple iPhone 15 Pro Max | Cantidad: 1 | Subtotal: $6800000,00
+TOTAL (con IVA): $8092000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 8
+Cliente: Valentina Diaz
+Fecha: 2026-01-25
+Items vendidos:
+  - Xiaomi Redmi Note 13 Pro | Cantidad: 1 | Subtotal: $1500000,00
+  - Realme C55 | Cantidad: 1 | Subtotal: $650000,00
+TOTAL (con IVA): $2440500,00
+----------------------------------------
+
+========================================
+TOTAL GENERAL: $37962500,00
+========================================
