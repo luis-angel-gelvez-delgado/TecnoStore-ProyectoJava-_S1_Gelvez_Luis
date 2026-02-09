@@ -12,6 +12,7 @@ import Modelo.Venta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import Modelo.FactoryCelular;
 
 public class MenuPrincipal {
 
@@ -138,7 +139,7 @@ public class MenuPrincipal {
         int stock = scanner.nextInt();
         scanner.nextLine();
 
-        Celular celular = new Celular(0, marca, modelo, so, gama, precio, stock);
+        Celular celular = FactoryCelular.crearCelular(gamaStr, marca, modelo, so, precio, stock);
         celularControlador.registrarCelular(celular);
     }
 
