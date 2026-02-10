@@ -3,7 +3,9 @@ package Persistencia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import Modelo.Marca;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,7 @@ public class MarcaDB {
                 marcas.add(m);
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener marcas: " + e.getMessage());
+            System.out.println("error al obtener marcas: " + e.getMessage());
         }
         
         return marcas;

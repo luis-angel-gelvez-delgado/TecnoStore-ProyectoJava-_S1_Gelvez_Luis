@@ -196,7 +196,7 @@ public class CelularDB {
             return filas > 0;
             
         } catch (SQLException e) {
-            System.out.println("Error al actualizar celular: " + e.getMessage());
+            System.out.println("error al actualizar celular: " + e.getMessage());
             return false;
         }
     }
