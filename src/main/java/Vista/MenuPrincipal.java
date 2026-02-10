@@ -1,8 +1,11 @@
 package Vista;
 
+// controladores que conectan la vista con la logica del sistema
 import Controlador.CelularControlador;
 import Controlador.ClienteControlador;
 import Controlador.VentaControlador;
+
+// clases del modelo que representan los datos
 import Modelo.CategoriaGama;
 import Modelo.Celular;
 import Modelo.Cliente;
@@ -14,13 +17,18 @@ import java.util.List;
 import java.util.Scanner;
 import Modelo.FactoryCelular;
 
+// esta clase muestra todos los menus del sistema y captura la informacion del usuario
 public class MenuPrincipal {
 
+    // referencias a los controladores
     private CelularControlador celularControlador;
     private ClienteControlador clienteControlador;
     private VentaControlador ventaControlador;
+
+    // scanner para leer lo que escribe el usuario
     private Scanner scanner;
 
+    // constructor que recibe los controladores y el scanner desde el main
     public MenuPrincipal(CelularControlador celularControlador, ClienteControlador clienteControlador,
             VentaControlador ventaControlador, Scanner scanner) {
         this.celularControlador = celularControlador;
@@ -29,6 +37,7 @@ public class MenuPrincipal {
         this.scanner = scanner;
     }
 
+    // menu principal del sistema
     public void mostrarMenu() {
         int opcion;
 
@@ -44,9 +53,11 @@ public class MenuPrincipal {
             System.out.println("========================================");
             System.out.print("Seleccione una opcion (debe ser numerica, ejemplo: 1): ");
 
+            // leemos la opcion del usuario
             opcion = scanner.nextInt();
             scanner.nextLine();
 
+            // segun la opcion elegida llamamos a un submenu
             switch (opcion) {
                 case 1:
                     menuCelulares();
@@ -70,8 +81,7 @@ public class MenuPrincipal {
         } while (opcion != 5);
     }
 
-    // menus: 
-    // menu de celulares
+    // ================= menu de celulares =================
     private void menuCelulares() {
         int opcion;
 
@@ -114,6 +124,7 @@ public class MenuPrincipal {
         } while (opcion != 6);
     }
 
+    // pide los datos al usuario y registra un celular
     private void registrarCelular() {
         System.out.println("\n--- Registrar Celular ---");
 
@@ -139,10 +150,12 @@ public class MenuPrincipal {
         int stock = scanner.nextInt();
         scanner.nextLine();
 
+        // se crea el objeto celular usando un factory
         Celular celular = FactoryCelular.crearCelular(gamaStr, marca, modelo, so, precio, stock);
         celularControlador.registrarCelular(celular);
     }
 
+    // muestra todos los celulares registrados
     private void listarCelulares() {
         List<Celular> lista = celularControlador.obtenerListaCelulares();
 
@@ -167,6 +180,7 @@ public class MenuPrincipal {
         }
     }
 
+    // busca un celular por su id
     private void buscarCelular() {
         System.out.print("Ingrese ID del celular: ");
         int id = scanner.nextInt();
@@ -180,6 +194,7 @@ public class MenuPrincipal {
         }
     }
 
+    // cambia el stock de un celular existente
     private void actualizarStockCelular() {
         System.out.print("ID del celular: ");
         int id = scanner.nextInt();
@@ -191,6 +206,7 @@ public class MenuPrincipal {
         celularControlador.actualizarStock(id, nuevoStock);
     }
 
+    // elimina un celular segun su id
     private void eliminarCelular() {
         System.out.print("ID del celular a eliminar: ");
         int id = scanner.nextInt();
@@ -199,7 +215,7 @@ public class MenuPrincipal {
         celularControlador.eliminarCelular(id);
     }
 
-    // menu de clientes
+    // ================= menu clientes =================
     private void menuClientes() {
         int opcion;
 
@@ -238,6 +254,7 @@ public class MenuPrincipal {
         } while (opcion != 5);
     }
 
+    // registra un nuevo cliente
     private void registrarCliente() {
         System.out.println("\n--- Registrar Cliente ---");
 
@@ -257,6 +274,7 @@ public class MenuPrincipal {
         clienteControlador.registarCliente(cliente);
     }
 
+    // muestra todos los clientes
     private void listarClientes() {
         List<Cliente> lista = clienteControlador.obtenerListaClientes();
 
@@ -279,6 +297,7 @@ public class MenuPrincipal {
         }
     }
 
+    // busca un cliente por id
     private void buscarCliente() {
         System.out.print("Ingrese ID del cliente: ");
         int id = scanner.nextInt();
@@ -292,6 +311,7 @@ public class MenuPrincipal {
         }
     }
 
+    // elimina un cliente
     private void eliminarCliente() {
         System.out.print("ID del cliente a eliminar: ");
         int id = scanner.nextInt();
@@ -300,7 +320,7 @@ public class MenuPrincipal {
         clienteControlador.eliminarCliente(id);
     }
 
-    // menu de las ventas
+    // ================= menu ventas =================
     private void menuVentas() {
         int opcion;
 
@@ -331,6 +351,7 @@ public class MenuPrincipal {
         } while (opcion != 3);
     }
 
+    // registra una venta con varios celulares
     private void registrarVenta() {
         System.out.println("\n--- Registrar Venta ---");
 
@@ -361,6 +382,7 @@ public class MenuPrincipal {
         ventaControlador.registrarVenta(idCliente, idsCelulares, cantidades);
     }
 
+    // muestra todas las ventas realizadas
     private void listarVentas() {
         List<Venta> ventas = ventaControlador.obtenerListaVentas();
 
@@ -391,7 +413,7 @@ public class MenuPrincipal {
         }
     }
 
-    // menu de reportes
+    // ================= menu reportes =================
     private void menuReportes() {
         int opcion;
 
