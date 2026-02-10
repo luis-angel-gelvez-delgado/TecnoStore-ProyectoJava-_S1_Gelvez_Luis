@@ -2,7 +2,7 @@
        REPORTE DE VENTAS - TECNOSTORE
 ========================================
 Fecha de generacion: 2026-02-09
-Total de ventas: 8
+Total de ventas: 10
 ========================================
 
 ----------------------------------------
@@ -79,6 +79,25 @@ Items vendidos:
 TOTAL (con iva): $2440500,00
 ----------------------------------------
 
+----------------------------------------
+Venta ID: 9
+Cliente: Carlos Rodriguez
+Fecha: 2026-02-09
+Items vendidos:
+  - Samsung Galaxy Z Fold 5 | Cantidad: 1 | Subtotal: $7500000,00
+  - Apple iPhone 15 Pro Max | Cantidad: 1 | Subtotal: $6800000,00
+TOTAL (con iva): $17017000,00
+----------------------------------------
+
+----------------------------------------
+Venta ID: 10
+Cliente: Carlos Rodriguez
+Fecha: 2026-02-09
+Items vendidos:
+  - Samsung Galaxy S24 Ultra | Cantidad: 2 | Subtotal: $10400000,00
+TOTAL (con iva): $12376000,00
+----------------------------------------
+
 ========================================
-TOTAL GENERAL: $37962500,00
+TOTAL GENERAL: $67355500,00
 ========================================
