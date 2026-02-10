@@ -17,8 +17,7 @@ public class ClienteDB {
         String sql = "INSERT INTO clientes (nombre, identificacion, correo, telefono) VALUES (?, ?, ?, ?)";
 
         try (
-                Connection conn = ConexionDB.obtenerConexion(); 
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             // asignar los valores del cliente a los parametros
             ps.setString(1, cliente.getNombre());
@@ -43,9 +42,7 @@ public class ClienteDB {
         String sql = "SELECT * from clientes";
 
         try (
-                Connection conn = ConexionDB.obtenerConexion(); 
-                PreparedStatement ps = conn.prepareStatement(sql); 
-                ResultSet rs = ps.executeQuery()) {
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             // recorrer cada cliente que trajo la consulta
             while (rs.next()) {
@@ -77,8 +74,7 @@ public class ClienteDB {
         String sql = "SELECT * FROM clientes WHERE id = ?";
 
         try (
-                Connection conn = ConexionDB.obtenerConexion(); 
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -112,8 +108,7 @@ public class ClienteDB {
         String sql = "DELETE FROM clientes WHERE id = ?";
 
         try (
-                Connection conn = ConexionDB.obtenerConexion(); 
-                PreparedStatement ps = conn.prepareStatement(sql)) {
+                Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -121,9 +116,14 @@ public class ClienteDB {
             return filas > 0; // true si elimino algo
 
         } catch (SQLException e) {
-            System.out.println("error al eliminar cliente: " + e.getMessage());
-            return false;
+            // Detecta si es por clave foránea (cliente con ventas)
+            if (e.getMessage().contains("foreign key constraint")) {
+                // simplemente retornamos false, sin imprimir nada
+                return false;
+            }
 
+            // cualquier otro error también retorna false
+            return false;
         }
 
     }
@@ -132,8 +132,7 @@ public class ClienteDB {
     public boolean actualizarCliente(Cliente cliente) {
         String sql = "UPDATE clientes SET nombre = ?, identificacion = ?, correo = ?, telefono = ? WHERE id = ?";
 
-        try (Connection conn = ConexionDB.obtenerConexion(); 
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionDB.obtenerConexion(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             // asignar los nuevos valores
             ps.setString(1, cliente.getNombre());

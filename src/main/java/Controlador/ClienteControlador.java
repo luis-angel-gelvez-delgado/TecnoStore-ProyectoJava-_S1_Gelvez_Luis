@@ -85,14 +85,15 @@ public class ClienteControlador {
     }
 
     // metodo para eliminar un cliente de la base de datos
-    public void eliminarCliente(int id) {
+    public boolean eliminarCliente(int id) {
         boolean eliminado = clienteDB.eliminarCliente(id);
 
         if (eliminado) {
             System.out.println("cliente eliminado con exito");
         } else {
-            System.out.println("no se pudo eliminar, es superior al resto, es una deidad XD");
+            System.out.println("");
         }
+        return clienteDB.eliminarCliente(id);
     }
 
     // metodo para actualizar los datos de un cliente

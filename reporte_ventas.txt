@@ -1,8 +1,8 @@
 ========================================
        REPORTE DE VENTAS - TECNOSTORE
 ========================================
-Fecha de generacion: 2026-02-09
-Total de ventas: 10
+Fecha de generacion: 2026-02-10
+Total de ventas: 11
 ========================================
 
 ----------------------------------------
@@ -98,6 +98,15 @@ Items vendidos:
 TOTAL (con iva): $12376000,00
 ----------------------------------------
 
+----------------------------------------
+Venta ID: 11
+Cliente: Carlos Rodriguez
+Fecha: 2026-02-10
+Items vendidos:
+  - Samsung Galaxy S24 Ultra | Cantidad: 1 | Subtotal: $5200000,00
+TOTAL (con iva): $6188000,00
+----------------------------------------
+
 ========================================
-TOTAL GENERAL: $67355500,00
+TOTAL GENERAL: $73543500,00
 ========================================

@@ -458,13 +458,29 @@ public class MenuPrincipal {
 
     // elimina un cliente de la base de datos
     private void eliminarCliente() {
-        try {
-            int id = leerEntero("ID del cliente a eliminar: ");
-            clienteControlador.eliminarCliente(id);
-        } catch (Exception e) {
-            System.out.println("Error al eliminar cliente: " + e.getMessage());
+    try {
+        int id = leerEntero("ID del cliente a eliminar: ");
+
+        System.out.print("esta seguro que desea eliminar este cliente? (S/N): ");
+        String confirmacion = scanner.nextLine();
+
+        if (confirmacion.equalsIgnoreCase("S")) {
+            boolean eliminado = clienteControlador.eliminarCliente(id);
+
+            if (eliminado) {
+                System.out.println("Cliente eliminado correctamente.");
+            } else {
+                System.out.println("No se pudo eliminar el cliente, puede que no exista o tenga ventas registradas");
+            }
+        } else {
+            System.out.println("Eliminación cancelada.");
         }
+
+    } catch (Exception e) {
+        System.out.println("Error al eliminar cliente: " + e.getMessage());
     }
+}
+
 
     // ================= submenu: gestion de venas =================
     
@@ -521,7 +537,7 @@ public class MenuPrincipal {
                 cantidades.add(cantidad);
 
                 // preguntar si quiere agregar otro celular
-                System.out.print("¿Agregar otro celular? (s/n): ");
+                System.out.print("agregar otro celular? (s/n): ");
                 continuar = scanner.nextLine();
 
             } while (continuar.equalsIgnoreCase("s")); // repite si escribe "s" o "S"
