@@ -1,11 +1,13 @@
 package Modelo;
 
+// clase que representa una marca de celulares
+// ejemplo: Samsung, Apple, Xiaomi, etc
 public class Marca {
 
     private int id;
     private String nombre;
 
-    //constructor vacio
+    // constructor vacio
     public Marca() {
     }
 
@@ -15,7 +17,7 @@ public class Marca {
         this.nombre = nombre;
     }
 
-    // geter y setter ID
+    // getters y setters
     public int getId() {
         return id;
     }
@@ -24,7 +26,6 @@ public class Marca {
         this.id = id;
     }
 
-    // GEtter y setter nombre
     public String getNombre() {
         return nombre;
     }
@@ -33,7 +34,7 @@ public class Marca {
         this.nombre = nombre;
     }
 
-    // metodo toString(para que sea facil mostrar la info)
+    // metodo para mostrar la marca como texto
     @Override
     public String toString() {
         return "Marca{" + "id=" + id + ", nombre=" + nombre + '}';
