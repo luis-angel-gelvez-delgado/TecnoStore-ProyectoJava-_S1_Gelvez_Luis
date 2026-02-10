@@ -5,42 +5,56 @@ import Persistencia.ClienteDB;
 import java.util.List;
 import java.util.regex.Pattern;
 
+// esta clase maneja toda la logica de negocio de clientes
+// valida correos, verifica documentos duplicados, etc
 public class ClienteControlador {
 
+    // objeto que se comunica con la base de datos
     private ClienteDB clienteDB;
 
+    // cuando se crea el controlador, se crea la conexion a la bd
     public ClienteControlador() {
         clienteDB = new ClienteDB();
     }
 
-// funcion para validar que el correo este bien
+// funcion privada para validar que el correo tenga formato correcto
+    // usa expresiones regulares (regex) para verificar el patron
     private boolean validarCorreo(String correo) {
+        // patron que define como debe verse un correo valido
+        // ejemplo valido: usuario@dominio.com
         String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return Pattern.matches(regex, correo);
     }
 
-// para validar que el documento sea unico
+    // funcion privada para verificar si un documento ya esta registrado
+    // evita que se registren clientes duplicados
     private boolean documentoExiste(String documento) {
+
+        // trae todos los clientes de la base de datos
         List<Cliente> clientes = clienteDB.obtenerClientes();
+
+        // usa stream api para buscar si alguno tiene el mismo documento
+        // anyMatch devuelve true si encuentra al menos uno que coincida
         return clientes.stream().anyMatch(c -> c.getDocumento().equals(documento));
     }
 
-// registrar clientes con validaciones
+    // metodo para registrar un nuevo cliente (con todas las validaciones)
     public void registarCliente(Cliente cliente) {
 
-        // validamos correo
+        // validacion 1: verifica que el correo tenga formato valido
         if (!validarCorreo(cliente.getCorreo())) {
             System.out.println("error: el formato del correo es invalido");
             return;
         }
 
-// validar cliente que exista con el documento
+        // validacion 2: verifica que el documento no este duplicado
         if (documentoExiste(cliente.getDocumento())) {
             System.out.println("ya existe un cliente con ese numero de documento");
             return;
 
         }
 
+        // si pasa todas las validaciones, intenta guardar en la bd
         boolean guardado = clienteDB.insertarCliente(cliente);
 
         if (guardado) {
@@ -50,7 +64,7 @@ public class ClienteControlador {
         }
     }
 
-//listar clientes
+    // metodo para mostrar todos los clientes registrados
     public void listarClientes() {
         List<Cliente> lista = clienteDB.obtenerClientes();
 
@@ -58,19 +72,19 @@ public class ClienteControlador {
             System.out.println("no hay clientes registrados");
             return;
         }
-
+        // recorre y muestra cada cliente
         for (Cliente c : lista) {
             System.out.println(c);
         }
 
     }
 
-// buscar cliente por id
+    // metodo para buscar un cliente especifico por su id
     public Cliente buscarClientePorId(int id) {
         return clienteDB.buscarPorId(id);
     }
 
-//eliminar cliente
+    // metodo para eliminar un cliente de la base de datos
     public void eliminarCliente(int id) {
         boolean eliminado = clienteDB.eliminarCliente(id);
 
@@ -81,15 +95,16 @@ public class ClienteControlador {
         }
     }
 
-// actualizar cliente
+    // metodo para actualizar los datos de un cliente
     public void actualizarCliente(Cliente cliente) {
 
-        // Validar correo
+        // valida que el nuevo correo tenga formato correcto
         if (!validarCorreo(cliente.getCorreo())) {
             System.out.println("error: El formato del correo es invalido");
             return;
         }
 
+        // intenta actualizar en la base de datos
         boolean actualizado = clienteDB.actualizarCliente(cliente);
 
         if (actualizado) {
@@ -99,6 +114,8 @@ public class ClienteControlador {
         }
     }
 
+    // metodo auxiliar que devuelve la lista de clientes
+    // lo usa la vista para mostrar los clientes con formato
     public List<Cliente> obtenerListaClientes() {
         return clienteDB.obtenerClientes();
     }
