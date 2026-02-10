@@ -21,13 +21,13 @@ public class CelularControlador {
 
         // validacion: el precio tiene que ser mayor a 0
         if (celular.getPrecio() <= 0) {
-            System.out.println("El precio debe ser mayor de 0");
+            System.out.println("el precio debe ser mayor de 0");
             return;
         }
 
         // validacion: el stock no puede ser negativo
         if (celular.getStock() <= 0) {
-            System.out.println("El stock no puede ser negativo");
+            System.out.println("el stock no puede ser negativo");
             return;// si no cumple, se sale del metodo
         }
 
@@ -38,7 +38,7 @@ public class CelularControlador {
         if (guardado) {
             System.out.println("celular registrado correctamente");
         } else {
-            System.out.println("Error al registrar el celular");
+            System.out.println("error al registrar el celular");
         }
 
     }
@@ -81,7 +81,7 @@ public class CelularControlador {
         // muestra mensaje segun el resultado
 
         if (actualizado) {
-            System.out.println("Stock actualizado con exito");
+            System.out.println("stock actualizado con exito");
         } else {
             System.out.println("no se pudo actualizar el stock");
         }
@@ -93,7 +93,7 @@ public class CelularControlador {
         boolean eliminado = celularDB.eliminarCelular(id);
 
         if (eliminado) {
-            System.out.println("Celular eliminado con exito");
+            System.out.println("celular eliminado con exito");
         } else {
             System.out.println("no se pudo eliminar el celular");
         }
@@ -103,13 +103,13 @@ public class CelularControlador {
     public void actualizarCelular(Celular celular) {
         // validacion de precio
         if (celular.getPrecio() <= 0) {
-            System.out.println("El precio debe ser mayor de 0, o lo va a regalar?");
+            System.out.println("el precio debe ser mayor de 0, o lo va a regalar?");
             return;
         }
 
         // validacion de stock
         if (celular.getStock() < 0) {
-            System.out.println("El stock no puede ser negativo");
+            System.out.println("el stock no puede ser negativo");
             return;
         }
 
@@ -117,9 +117,9 @@ public class CelularControlador {
         boolean actualizado = celularDB.actualizarCelular(celular);
 
         if (actualizado) {
-            System.out.println("Celular actualizado con éxito");
+            System.out.println("celular actualizado con exito");
         } else {
-            System.out.println("No se pudo actualizar el celular");
+            System.out.println("no se pudo actualizar el celular");
         }
     }
 
@@ -140,7 +140,7 @@ public class CelularControlador {
 
         // si no hay celulares con stock bajo, avisa
         if (stockBajo.isEmpty()) {
-            System.out.println("No hay celulares con stock bajo");
+            System.out.println("no hay celulares con stock bajo");
         } else {
 
             // recorre y muestra cada celular con stock bajo

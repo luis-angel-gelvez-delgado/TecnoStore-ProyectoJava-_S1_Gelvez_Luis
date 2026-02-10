@@ -89,7 +89,7 @@ public class ClienteControlador {
         boolean eliminado = clienteDB.eliminarCliente(id);
 
         if (eliminado) {
-            System.out.println("Cliente eliminado con exito");
+            System.out.println("cliente eliminado con exito");
         } else {
             System.out.println("no se pudo eliminar, es superior al resto, es una deidad XD");
         }
@@ -100,7 +100,7 @@ public class ClienteControlador {
 
         // valida que el nuevo correo tenga formato correcto
         if (!validarCorreo(cliente.getCorreo())) {
-            System.out.println("error: El formato del correo es invalido");
+            System.out.println("error: el formato del correo es invalido");
             return;
         }
 

@@ -4,14 +4,18 @@ import Modelo.Celular;
 import Modelo.Cliente;
 import Modelo.ItemVenta;
 import Modelo.Venta;
+
 import Persistencia.CelularDB;
 import Persistencia.ClienteDB;
 import Persistencia.VentaDB;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +24,7 @@ import java.util.stream.Collectors;
 
 
 
-// esta clase es la mas compleja, maneja ventas, reportes y archivos
+// esta clase es la mas mamona, maneja ventas, reportes y archivos
 // coordina las acciones entre celulares, clientes y ventas
 public class VentaControlador {
 
@@ -45,7 +49,7 @@ public class VentaControlador {
         // paso 1: buscar al cliente en la base de datos
         Cliente cliente = clienteDB.buscarPorId(idCliente);
         if (cliente == null) {
-            System.out.println("Error: Cliente no encontrado");
+            System.out.println("error: cliente no encontrado");
             return;// si no existe el cliente, no puede continuar
         }
 
@@ -64,18 +68,18 @@ public class VentaControlador {
 
                         // validacion: verificar que el celular exista
             if (celular == null) {
-                System.out.println("Error: Celular con ID " + idCelular + " no encontrado");
+                System.out.println("error: celular con ID " + idCelular + " no encontrado");
                 continue;// si no existe, pasa al siguiente
             }
 
             // validacion: verificar que haya suficiente stock
             if (celular.getStock() < cantidad) {
-                System.out.println("Error: Stock insuficiente para " + celular.getMarca().getNombre()
+                System.out.println("error: stock insuficiente para " + celular.getMarca().getNombre()
                         + " " + celular.getModelo() + ". Disponible: " + celular.getStock());
                 continue;// si no hay stock, pasa al siguiente
             }
 
-            // calcular el subtotal de este item (precio x cantidad)
+            // calcular el subtotal de este item (precio * cantidad)
             double subtotal = celular.getPrecio() * cantidad;
             ItemVenta item = new ItemVenta(celular, cantidad, subtotal);
 
@@ -92,7 +96,7 @@ public class VentaControlador {
 
         // validacion final: verificar que la venta tenga al menos un item
         if (venta.getItems().isEmpty()) {
-            System.out.println("error: No se pudo procesar ningun item de la venta");
+            System.out.println("error: no se pudo procesar ningun item de la venta");
             return;
         }
 
@@ -116,7 +120,7 @@ public class VentaControlador {
         List<Venta> ventas = ventaDB.obtenerTodasLasVentas();
 
         if (ventas.isEmpty()) {
-            System.out.println("No hay ventas registradas");
+            System.out.println("no hay ventas registradas");
             return;
         }
 
@@ -260,7 +264,7 @@ public class VentaControlador {
         List<Venta> ventas = ventaDB.obtenerTodasLasVentas();
 
         if (ventas.isEmpty()) {
-            System.out.println("No hay ventas registradas");
+            System.out.println("no hay ventas registradas");
             return;
         }
 

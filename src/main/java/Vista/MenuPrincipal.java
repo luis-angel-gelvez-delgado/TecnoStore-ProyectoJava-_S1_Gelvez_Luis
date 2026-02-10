@@ -20,6 +20,8 @@ import Persistencia.MarcaDB;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+// este import que capta un dato que es diferente al esperado, ejemplo: si se pide numero y el usuario pone "gf" se lanza el error
 import java.util.InputMismatchException;
 
 // esta clase es la interfaz de usuario del sistema
@@ -47,7 +49,7 @@ public class MenuPrincipal {
         this.scanner = scanner;
     }
 
-    // ========== METODOS AUXILIARES PARA LECTURA SEGURA ==========
+    // ========== metodos auxiliares para lectura segura ==========
     
     // metodo que lee un numero entero de forma segura
     // si el usuario escribe letras, no se rompe el programa
@@ -61,7 +63,7 @@ public class MenuPrincipal {
                 return valor;
             } catch (InputMismatchException e) {
                 // si escribe algo que no es numero, mostrar error
-                System.out.println("Error: Debe ingresar un numero entero valido");
+                System.out.println("error: Debe ingresar un numero entero valido");
                 scanner.nextLine(); // limpiar el buffer para no quedar en loop infinito
             }
         }
@@ -77,7 +79,7 @@ public class MenuPrincipal {
                 scanner.nextLine(); // limpiar buffer
                 return valor;
             } catch (InputMismatchException e) {
-                System.out.println("Error: Debe ingresar un numero decimal valido (ejemplo: 1500000.50)");
+                System.out.println("error: debe ingresar un numero decimal valido (ejemplo: 1500000.50)");
                 scanner.nextLine(); // limpiar buffer
             }
         }
@@ -132,7 +134,7 @@ public class MenuPrincipal {
         } while (opcion != 5); // repite hasta que elija salir
     }
 
-    // ================= SUBMENU: GESTION DE CELULARES =================
+    // ================= submenu: gestion de celulares =================
     
     // este menu maneja todo lo relacionado con celulares
     private void menuCelulares() {
@@ -189,7 +191,7 @@ public class MenuPrincipal {
 
             // validar que no este vacio
             if (nombreMarca.trim().isEmpty()) {
-                System.out.println("Error: El nombre de la marca no puede estar vacio");
+                System.out.println("error: el nombre de la marca no puede estar vacio");
                 return;
             }
 
@@ -198,7 +200,7 @@ public class MenuPrincipal {
             marcaDB.guardarMarca(nombreMarca);
 
         } catch (Exception e) {
-            System.out.println("Error al registrar marca: " + e.getMessage());
+            System.out.println("error al registrar marca: " + e.getMessage());
         }
     }
 
@@ -252,7 +254,7 @@ public class MenuPrincipal {
             try {
                 gama = CategoriaGama.valueOf(gamaStr);
             } catch (IllegalArgumentException e) {
-                System.out.println("Error: Gama invalida. Use ALTA, MEDIA o BAJA");
+                System.out.println("error: gama invalida, use ALTA, MEDIA o BAJA");
                 return;
             }
 
@@ -267,7 +269,7 @@ public class MenuPrincipal {
             celularControlador.registrarCelular(celular);
 
         } catch (Exception e) {
-            System.out.println("Error al registrar celular: " + e.getMessage());
+            System.out.println("error al registrar celular: " + e.getMessage());
             scanner.nextLine(); // limpiar buffer
         }
     }
@@ -296,7 +298,7 @@ public class MenuPrincipal {
             System.out.println("Modelo: " + c.getModelo());
             System.out.println("Sistema Operativo: " + c.getSistemaOperativo());
             System.out.println("Gama: " + c.getGama());
-            // %,.0f = formato con comas/puntos de miles, sin decimales
+            // %,.0f = formato con comas o puntos de miles, sin decimales
             System.out.println("Precio: $" + String.format("%,.0f", c.getPrecio()));
             System.out.println("Stock: " + c.getStock() + " unidades");
             System.out.println("----------------------------------------");
@@ -311,14 +313,14 @@ public class MenuPrincipal {
             // buscar el celular usando el controlador
             Celular c = celularControlador.buscarCelularPorId(id);
 
-            // si lo encuentra, mostrarlo; si no, avisar
+            // si lo encuentra, lo muestra sino, avisa
             if (c != null) {
                 System.out.println(c);
             } else {
                 System.out.println("Celular no encontrado");
             }
         } catch (Exception e) {
-            System.out.println("Error al buscar celular: " + e.getMessage());
+            System.out.println("error al buscar celular: " + e.getMessage());
         }
     }
 
@@ -345,7 +347,7 @@ public class MenuPrincipal {
         }
     }
 
-    // ================= SUBMENU: GESTION DE CLIENTES =================
+    // ================= submenu: gestion de clientes =================
     
     // este menu maneja todo lo relacionado con clientes
     private void menuClientes() {
@@ -410,7 +412,7 @@ public class MenuPrincipal {
             clienteControlador.registarCliente(cliente);
 
         } catch (Exception e) {
-            System.out.println("Error al registrar cliente: " + e.getMessage());
+            System.out.println("error al registrar cliente: " + e.getMessage());
             scanner.nextLine();
         }
     }
@@ -464,7 +466,7 @@ public class MenuPrincipal {
         }
     }
 
-    // ================= SUBMENU: GESTION DE VENTAS =================
+    // ================= submenu: gestion de venas =================
     
     // este menu permite registrar y listar ventas
     private void menuVentas() {
@@ -522,14 +524,14 @@ public class MenuPrincipal {
                 System.out.print("¿Agregar otro celular? (s/n): ");
                 continuar = scanner.nextLine();
 
-            } while (continuar.equalsIgnoreCase("s")); // repite si escribe 's' o 'S'
+            } while (continuar.equalsIgnoreCase("s")); // repite si escribe "s" o "S"
 
             // enviar toda la informacion al controlador
             // el controlador se encarga de validar, calcular iva, actualizar stock, etc
             ventaControlador.registrarVenta(idCliente, idsCelulares, cantidades);
 
         } catch (Exception e) {
-            System.out.println("Error al registrar venta: " + e.getMessage());
+            System.out.println("error al registrar venta: " + e.getMessage());
             scanner.nextLine();
         }
     }
@@ -568,7 +570,7 @@ public class MenuPrincipal {
         }
     }
 
-    // ================= SUBMENU: REPORTES =================
+    // ================= submenu:reportes =================
     
     // este menu muestra reportes usando stream api
     private void menuReportes() {
