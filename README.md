@@ -1,6 +1,6 @@
-# TecnoStore - Sistema de Gestión de Ventas
+# TecnoStore - Sistema de Gestion de Ventas
 
-Sistema de consola en Java para la gestión automatizada de ventas, inventario y clientes de una tienda de celulares.
+Sistema de consola en Java para la gestion automatizada de ventas, inventario y clientes de una tienda de celulares.
 
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
@@ -8,47 +8,52 @@ Sistema de consola en Java para la gestión automatizada de ventas, inventario y
 
 ---
 
-##  Descripción del Proyecto
+## Descripcion del Proyecto
 
 **TecnoStore** es una tienda minorista dedicada a la venta de telefonos celulares de diferentes marcas y gamas. Este sistema permite:
 
--  Gestionar catalogo de celulares (CRUD completo)
--  Administrar clientes con validaciones
--  Registrar ventas con calculo automatico de IVA (19%)
--  Generar reportes de negocio con Stream API
--  Persistencia de datos en MySQL con JDBC
--  Exportar reportes a archivos TXT
+- Gestionar catalogo de celulares (CRUD completo)
+- Administrar clientes con validaciones
+- Registrar ventas con calculo automatico de IVA (19%)
+- Generar reportes de negocio con Stream API
+- Persistencia de datos en MySQL con JDBC
+- Exportar reportes a archivos TXT
 
 ---
 
-##  Objetivos Cumplidos
+## Objetivos Cumplidos
 
 ### 1. Gestion de Celulares
 - Registrar, actualizar, eliminar y listar celulares
+- Seleccion de marca desde lista ordenada por ID
+- Seleccion de sistema operativo desde menu (Android, iOS, Windows, HarmonyOS, KaiOS)
+- Seleccion de gama desde menu (ALTA, MEDIA, BAJA)
 - Validacion de precio y stock positivos
+- Registro de nuevas marcas en el sistema
 - Campos: ID, marca, modelo, sistema operativo, gama, precio, stock
 
 ### 2. Gestion de Clientes  
 - CRUD completo de clientes
-- Validacion de formato de correo electronico
+- Validacion de formato de correo electronico con expresiones regulares
 - Validacion de documento de identidad unico
 - Campos: ID, nombre, identificacion, correo, telefono
 
 ### 3. Gestion de Ventas
-- Registro de ventas con multiples celulares
+- Registro de ventas con multiples celulares por transaccion
 - Calculo automatico de total con IVA del 19%
-- Actualizacion automatica de stock
-- Persistencia en base de datos MySQL
+- Actualizacion automatica de stock al momento de la venta
+- Persistencia completa en base de datos MySQL
 
 ### 4. Reportes y Analisis
 - Celulares con stock bajo (< 5 unidades)
 - Top 3 celulares mas vendidos
 - Ventas totales agrupadas por mes
-- **Uso intensivo de Stream API** (filter, flatMap, sorted, groupingBy, etc.)
+- Uso intensivo de Stream API (filter, flatMap, sorted, groupingBy, anyMatch, etc.)
 
 ### 5. Persistencia
 - Conexion a MySQL con JDBC
 - Try-with-resources para manejo seguro de conexiones
+- PreparedStatement para prevenir SQL Injection
 - Generacion de archivo `reporte_ventas.txt`
 
 ### 6. Patrones de Diseño
@@ -57,14 +62,21 @@ Sistema de consola en Java para la gestión automatizada de ventas, inventario y
 - **MVC Pattern**: Separacion Modelo-Vista-Controlador
 
 ### 7. Principios POO
--  **Encapsulamiento**: Atributos privados/protected con getters/setters
--  **Herencia**: `Cliente extends Persona`
--  **Composicion**: `Venta` contiene `List<ItemVenta>`, `ItemVenta` contiene `Celular`
--  **Polimorfismo**: Sobrescritura de `toString()` en clases
+- **Encapsulamiento**: Atributos privados/protected con getters/setters
+- **Herencia**: `Cliente extends Persona`
+- **Composicion**: `Venta` contiene `List<ItemVenta>`, `ItemVenta` contiene `Celular`
+- **Polimorfismo**: Sobrescritura de `toString()` en clases
+
+### 8. Manejo de Excepciones
+- Validacion de entrada de usuario con InputMismatchException
+- Metodos seguros para lectura de enteros y decimales
+- Try-catch en operaciones criticas
+- Manejo robusto de errores sin crashes del sistema
 
 ---
 
-##  Estructura del Proyecto
+## Estructura del Proyecto
+
 ```
 TecnoStore/
 ├── src/
@@ -103,9 +115,10 @@ TecnoStore/
 
 ---
 
-##  Diagrama de Clases
+## Diagrama de Clases
 
 ### Modelo (Entidades)
+
 ```
 Persona (abstract)
 ├── id: int
@@ -151,9 +164,10 @@ ItemVenta
 
 ---
 
-##  Base de Datos
+## Base de Datos
 
 ### Modelo Entidad-Relacion
+
 ```
 clientes (id, nombre, identificacion, correo, telefono)
     │
@@ -171,6 +185,7 @@ celulares (id, marca, modelo, sistema_operativo, gama, precio, stock)
 ```
 
 ### Script SQL
+
 ```sql
 CREATE DATABASE TecnoStore;
 USE TecnoStore;
@@ -224,24 +239,26 @@ CREATE TABLE detalle_ventas (
 
 ---
 
-##  Configuracion e Instalacion
+## Configuracion e Instalacion
 
 ### Requisitos Previos
 
--  **Java JDK 17 o superior**
--  **MySQL 8.0 o superior**
--  **MySQL Connector/J** (JDBC Driver)
--  **IDE** (NetBeans, IntelliJ IDEA o Eclipse)
+- **Java JDK 17 o superior**
+- **MySQL 8.0 o superior**
+- **MySQL Connector/J** (JDBC Driver)
+- **IDE** (NetBeans, IntelliJ IDEA o Eclipse)
 
 ### Pasos de Instalacion
 
 #### 1. Clonar el Repositorio
+
 ```bash
 git clone https://github.com/tu-usuario/tecnostore.git
 cd tecnostore
 ```
 
 #### 2. Configurar Base de Datos
+
 ```bash
 # Iniciar MySQL
 mysql -u root -p
@@ -255,10 +272,11 @@ O copiar y pegar el contenido de `tecnostore_db.sql` en MySQL Workbench.
 #### 3. Configurar Conexion en el Codigo
 
 Editar `ConexionDB.java` (lineas 8-10):
+
 ```java
 private static final String URL = "jdbc:mysql://localhost:3306/TecnoStore";
 private static final String USUARIO = "root";
-private static final String PASSWORD = "tu_contraseña";
+private static final String PASSWORD = "tu_contrasena";
 ```
 
 #### 4. Agregar MySQL Connector al Proyecto
@@ -274,6 +292,7 @@ private static final String PASSWORD = "tu_contraseña";
 3. Seleccionar el JAR del MySQL Connector
 
 #### 5. Compilar y Ejecutar
+
 ```bash
 # Compilar
 javac -cp .:mysql-connector-j-9.6.0.jar Principal/Main.java
@@ -286,9 +305,10 @@ O ejecutar directamente desde el IDE: `Run > Run File` (Shift+F6)
 
 ---
 
-## 🎮 Ejemplo de Ejecucion
+## Ejemplo de Ejecucion
 
 ### Menu Principal
+
 ```
 ========================================
     bienvenido a TecnoStore
@@ -299,16 +319,44 @@ O ejecutar directamente desde el IDE: `Run > Run File` (Shift+F6)
 4. Reportes
 5. Salir
 ========================================
-Seleccione una opcion (debe ser numerica, ejemplo: 1):
+Seleccione una opcion: 
 ```
 
 ### 1. Registrar Celular
+
 ```
 --- Registrar Celular ---
-Marca: Samsung
+
+=== MARCAS DISPONIBLES ===
+1. Samsung
+2. Apple
+3. Xiaomi
+4. Motorola
+5. Huawei
+6. Oppo
+7. Realme
+8. Nokia
+==========================
+
+Selecciona el ID de la marca: 1
 Modelo: Galaxy S24 Ultra
-Sistema Operativo: Android
-Gama (ALTA/MEDIA/BAJA): ALTA
+
+=== SELECCIONAR SISTEMA OPERATIVO ===
+1. Android
+2. iOS
+3. Windows
+4. HarmonyOS
+5. KaiOS
+======================================
+Seleccione el sistema operativo (1-5): 1
+
+=== SELECCIONAR GAMA ===
+1. ALTA
+2. MEDIA
+3. BAJA
+========================
+Seleccione la gama (1-3): 1
+
 Precio: 5200000
 Stock: 8
 
@@ -316,7 +364,8 @@ conexion exitosa a la base de datos
 celular registrado correctamente
 ```
 
-### 2. Listar Celulares (Formateado)
+### 2. Listar Celulares
+
 ```
 ========================================
          LISTADO DE CELULARES
@@ -333,6 +382,7 @@ Stock: 8 unidades
 ```
 
 ### 3. Registrar Cliente
+
 ```
 --- Registrar Cliente ---
 Nombre: Carlos Rodriguez
@@ -345,6 +395,7 @@ cliente registrado exitosamente
 ```
 
 ### 4. Registrar Venta
+
 ```
 --- Registrar Venta ---
 ID del cliente: 1
@@ -360,6 +411,7 @@ Total (con IVA 19%): $12,376,000.00
 ```
 
 ### 5. Top 3 Celulares Mas Vendidos
+
 ```
 === TOP 3 CELULARES MAS VENDIDOS ===
 Samsung Galaxy S24 Ultra - Vendidos: 5 unidades
@@ -369,6 +421,7 @@ Motorola Moto G54 - Vendidos: 3 unidades
 ```
 
 ### 6. Ventas por Mes
+
 ```
 === VENTAS TOTALES POR MES ===
 Mes: 2026-01 - Total: $15,234,500.00
@@ -377,11 +430,13 @@ Mes: 2026-02 - Total: $24,567,800.00
 ```
 
 ### 7. Generar Reporte TXT
+
 ```
 Reporte generado exitosamente: reporte_ventas.txt
 ```
 
 **Contenido de `reporte_ventas.txt`:**
+
 ```
 ========================================
        REPORTE DE VENTAS - TECNOSTORE
@@ -406,13 +461,14 @@ TOTAL GENERAL: $39,802,300.00
 
 ---
 
-##  Patrones de Diseño Implementados
+## Patrones de Diseño Implementados
 
 ### 1. Factory Pattern (FactoryCelular)
 
 **Proposito:** Encapsular la creacion de objetos `Celular` segun la gama.
 
 **Implementacion:**
+
 ```java
 public class FactoryCelular {
     public static Celular crearCelular(String gama, Marca marca, String modelo, 
@@ -439,6 +495,7 @@ public class FactoryCelular {
 ```
 
 **Uso:**
+
 ```java
 Celular celular = FactoryCelular.crearCelular("ALTA", marca, modelo, so, precio, stock);
 ```
@@ -448,9 +505,9 @@ Celular celular = FactoryCelular.crearCelular("ALTA", marca, modelo, so, precio,
 **Proposito:** Separar la logica de acceso a datos de la logica de negocio.
 
 **Implementacion:**
-- `CelularDB.java` - CRUD de celulares
+- `CelularDB.java` - CRUD de celulares con ORDER BY para listar ordenado
 - `ClienteDB.java` - CRUD de clientes
-- `VentaDB.java` - CRUD de ventas
+- `VentaDB.java` - CRUD de ventas con manejo de transacciones
 - `MarcaDB.java` - CRUD de marcas
 
 ### 3. MVC Pattern (Modelo-Vista-Controlador)
@@ -461,7 +518,7 @@ Celular celular = FactoryCelular.crearCelular("ALTA", marca, modelo, so, precio,
 
 ---
 
-## 🔬 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 | Tecnologia | Uso |
 |------------|-----|
@@ -476,27 +533,10 @@ Celular celular = FactoryCelular.crearCelular("ALTA", marca, modelo, so, precio,
 
 ---
 
-##  Capturas de Pantalla
-
-### Menu Principal
-![Menu Principal](docs/screenshots/menu_principal.png)
-
-### Listado de Celulares
-![Listado Celulares](docs/screenshots/listado_celulares.png)
-
-### Registro de Venta
-![Registro Venta](docs/screenshots/registro_venta.png)
-
-### Reportes
-![Reportes](docs/screenshots/reportes.png)
-
-*(Agregar carpeta `docs/screenshots/` con las capturas)*
-
----
-
-##  Ejemplos de Uso de Stream API
+## Ejemplos de Uso de Stream API
 
 ### Stock Bajo
+
 ```java
 List<Celular> stockBajo = todos.stream()
     .filter(c -> c.getStock() < 5)
@@ -504,6 +544,7 @@ List<Celular> stockBajo = todos.stream()
 ```
 
 ### Top 3 Mas Vendidos
+
 ```java
 ventasPorCelular.entrySet().stream()
     .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
@@ -512,6 +553,7 @@ ventasPorCelular.entrySet().stream()
 ```
 
 ### Ventas por Mes
+
 ```java
 Map<String, Double> ventasPorMes = ventas.stream()
     .collect(Collectors.groupingBy(
@@ -521,6 +563,7 @@ Map<String, Double> ventasPorMes = ventas.stream()
 ```
 
 ### Validacion de Documento Unico
+
 ```java
 boolean existe = clientes.stream()
     .anyMatch(c -> c.getDocumento().equals(documento));
@@ -528,9 +571,10 @@ boolean existe = clientes.stream()
 
 ---
 
-##  Manejo de Excepciones
+## Manejo de Excepciones
 
 ### Try-with-Resources en JDBC
+
 ```java
 try (Connection conn = ConexionDB.obtenerConexion();
      PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -543,6 +587,7 @@ try (Connection conn = ConexionDB.obtenerConexion();
 ```
 
 ### Try-with-Resources en Archivos
+
 ```java
 try (BufferedWriter writer = new BufferedWriter(new FileWriter("reporte_ventas.txt"))) {
     
@@ -553,58 +598,91 @@ try (BufferedWriter writer = new BufferedWriter(new FileWriter("reporte_ventas.t
 }
 ```
 
+### Manejo de Entrada de Usuario
+
+```java
+// metodo que valida entrada de numeros enteros
+// evita que el programa se rompa si el usuario escribe letras
+private int leerEntero(String mensaje) {
+    while (true) {
+        try {
+            System.out.print(mensaje);
+            int valor = scanner.nextInt();
+            scanner.nextLine();
+            return valor;
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Debe ingresar un numero entero valido");
+            scanner.nextLine();
+        }
+    }
+}
+```
+
 ---
 
-##  Validaciones Implementadas
+## Validaciones Implementadas
 
 ### Celulares
--  Precio debe ser mayor a 0
--  Stock no puede ser negativo
+- Precio debe ser mayor a 0
+- Stock no puede ser negativo
+- Marca debe existir en la base de datos (seleccion desde lista)
+- Gama debe ser ALTA, MEDIA o BAJA (seleccion desde menu)
+- Sistema operativo debe ser uno de los 5 disponibles (seleccion desde menu)
 
 ### Clientes
--  Formato de correo electronico valido (regex)
--  Numero de identificacion unico en la base de datos
+- Formato de correo electronico valido (regex)
+- Numero de identificacion unico en la base de datos
 
 ### Ventas
--  Cliente debe existir en la base de datos
--  Celular debe existir en la base de datos
--  Stock suficiente para la venta
+- Cliente debe existir en la base de datos
+- Celular debe existir en la base de datos
+- Stock suficiente para la venta
+
+### Entrada de Usuario
+- Validacion de numeros enteros (no permite letras)
+- Validacion de numeros decimales (no permite texto invalido)
+- Manejo de excepciones InputMismatchException
+- Mensajes de error claros y volver a solicitar entrada valida
 
 ---
 
-##  Funcionalidades Destacadas
+## Funcionalidades Destacadas
 
 1. **Calculo Automatico de IVA:** Toda venta aplica el 19% automaticamente
 2. **Actualizacion de Stock en Tiempo Real:** Al registrar una venta, el stock se actualiza inmediatamente
 3. **Reportes Dinamicos:** Uso intensivo de Stream API para calculos complejos
-4. **Formato Mejorado:** Listados con formato profesional y legible
+4. **Formato Mejorado:** Listados con formato profesional y legible (precios con separadores de miles)
 5. **Persistencia Completa:** Todas las operaciones se guardan en MySQL
 6. **Exportacion a TXT:** Generacion automatica de reportes en archivo de texto
+7. **Interfaz User-Friendly:** Listas de seleccion numeradas para marcas, gamas y sistemas operativos
+8. **Manejo Robusto de Errores:** El sistema no se cae si el usuario ingresa datos invalidos
+9. **Ordenamiento Automatico:** Las marcas se muestran ordenadas por ID
+10. **Gestion de Marcas:** Posibilidad de registrar nuevas marcas desde el menu
 
 ---
 
-##  Autor
+## Autor
 
-**Luis Angel Gelvez Delgado**  
-📧 Email: luisangelgelvezdelgado1750@gmail.com 
-🔗 GitHub: [@luis-angel-gelvez-delgado](https://github.com/luis-angel-gelvez-delgado)  
-🎓 Proyecto Academico - Programacion de Java
+**💜Luis Angel Gelvez Delgado💜**  
+Email: luisangelgelvezdelgado1750@gmail.com  
+GitHub: @luis-angel-gelvez-delgado  
+Proyecto Academico - Programacion de Java
 
 ---
 
-##  Licencia
+## Licencia
 
 Este proyecto es de uso academico y educativo.
 
 ---
 
-## 🙏 Agradecimientos
+## Agradecimientos
 
 - Al profesor por la guia brindada a lo largo del camino
 - A la comunidad de Stack Overflow por resolver dudas
 - A MySQL y Oracle por las herramientas de desarrollo
-- Y efectivamente, a ClaudeIA por la ayuda brindada con la busqueda y parche de una gran cantidad de errores
+- A ClaudeIA por la ayuda brindada con la busqueda y parche de errores
 
 ---
 
-**⭐ Si te gusto este proyecto, dale una estrella en GitHub!**
+**💜Si te gusto este proyecto, dale una estrella en GitHub💜**
