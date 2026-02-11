@@ -36,7 +36,7 @@ public class MarcaDB {
     // metodo para traer todas las marcas de la base de datos
     public List<Marca> obtenerMarcas() {
         List<Marca> marcas = new ArrayList<>();
-        String sql = "SELECT * FROM marcas";
+        String sql = "SELECT * FROM marcas ORDER BY id";
         
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement ps = conn.prepareStatement(sql);

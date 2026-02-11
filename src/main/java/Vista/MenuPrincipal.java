@@ -50,7 +50,6 @@ public class MenuPrincipal {
     }
 
     // ========== metodos auxiliares para lectura segura ==========
-    
     // metodo que lee un numero entero de forma segura
     // si el usuario escribe letras, no se rompe el programa
     // en su lugar, muestra un error y vuelve a preguntar
@@ -85,8 +84,63 @@ public class MenuPrincipal {
         }
     }
 
+    // metodo que muestra lista de gamas y permite seleccionar
+    // retorna el nombre de la gama seleccionada
+    private String seleccionarGama() {
+        System.out.println("\n=== SELECCIONAR GAMA ===");
+        System.out.println("1. ALTA");
+        System.out.println("2. MEDIA");
+        System.out.println("3. BAJA");
+        System.out.println("========================");
+
+        int opcion = leerEntero("Seleccione la gama (1-3): ");
+
+        // convertir numero a nombre de gama
+        switch (opcion) {
+            case 1:
+                return "ALTA";
+            case 2:
+                return "MEDIA";
+            case 3:
+                return "BAJA";
+            default:
+                System.out.println("Opcion invalida, se asignara MEDIA por defecto");
+                return "MEDIA";
+        }
+    }
+
+    // metodo que muestra lista de sistemas operativos y permite seleccionar
+    // retorna el nombre del sistema operativo seleccionado
+    private String seleccionarSistemaOperativo() {
+        System.out.println("\n=== sistema operativo ===");
+        System.out.println("1. Android");
+        System.out.println("2. iOS");
+        System.out.println("3. Windows");
+        System.out.println("4. HarmonyOS");
+        System.out.println("5. KaiOS");
+        System.out.println("======================================");
+
+        int opcion = leerEntero("Seleccione el sistema operativo: ");
+
+        // convertir numero a nombre de sistema operativo
+        switch (opcion) {
+            case 1:
+                return "Android";
+            case 2:
+                return "iOS";
+            case 3:
+                return "Windows";
+            case 4:
+                return "HarmonyOS";
+            case 5:
+                return "KaiOS";
+            default:
+                System.out.println("Opcion invalida, se asignara Android por defecto");
+                return "Android";
+        }
+    }
+
     // ========== MENU PRINCIPAL ==========
-    
     // metodo principal que muestra el menu inicial
     // este menu se repite hasta que el usuario elija salir
     public void mostrarMenu() {
@@ -135,7 +189,6 @@ public class MenuPrincipal {
     }
 
     // ================= submenu: gestion de celulares =================
-    
     // este menu maneja todo lo relacionado con celulares
     private void menuCelulares() {
         int opcion;
@@ -243,21 +296,20 @@ public class MenuPrincipal {
             System.out.print("Modelo: ");
             String modelo = scanner.nextLine();
 
-            System.out.print("Sistema Operativo: ");
-            String so = scanner.nextLine();
+            // en vez de escribir, seleccionar de una lista
+            String so = seleccionarSistemaOperativo();
 
-            System.out.print("Gama (ALTA/MEDIA/BAJA): ");
-            String gamaStr = scanner.nextLine().toUpperCase();
+// en vez de escribir, seleccionar de una lista
+            String gamaStr = seleccionarGama();
 
-            // validar que la gama existe
+// validar que la gama existe (ya no deberia fallar porque viene de la lista)
             CategoriaGama gama;
             try {
                 gama = CategoriaGama.valueOf(gamaStr);
             } catch (IllegalArgumentException e) {
-                System.out.println("error: gama invalida, use ALTA, MEDIA o BAJA");
+                System.out.println("Error: Gama invalida. Use ALTA, MEDIA o BAJA");
                 return;
             }
-
             // pedir precio y stock usando metodos seguros
             double precio = leerDecimal("Precio: ");
             int stock = leerEntero("Stock: ");
@@ -348,7 +400,6 @@ public class MenuPrincipal {
     }
 
     // ================= submenu: gestion de clientes =================
-    
     // este menu maneja todo lo relacionado con clientes
     private void menuClientes() {
         int opcion;
@@ -458,32 +509,30 @@ public class MenuPrincipal {
 
     // elimina un cliente de la base de datos
     private void eliminarCliente() {
-    try {
-        int id = leerEntero("ID del cliente a eliminar: ");
+        try {
+            int id = leerEntero("ID del cliente a eliminar: ");
 
-        System.out.print("esta seguro que desea eliminar este cliente? (S/N): ");
-        String confirmacion = scanner.nextLine();
+            System.out.print("esta seguro que desea eliminar este cliente? (S/N): ");
+            String confirmacion = scanner.nextLine();
 
-        if (confirmacion.equalsIgnoreCase("S")) {
-            boolean eliminado = clienteControlador.eliminarCliente(id);
+            if (confirmacion.equalsIgnoreCase("S")) {
+                boolean eliminado = clienteControlador.eliminarCliente(id);
 
-            if (eliminado) {
-                System.out.println("Cliente eliminado correctamente.");
+                if (eliminado) {
+                    System.out.println("Cliente eliminado correctamente.");
+                } else {
+                    System.out.println("No se pudo eliminar el cliente, puede que no exista o tenga ventas registradas");
+                }
             } else {
-                System.out.println("No se pudo eliminar el cliente, puede que no exista o tenga ventas registradas");
+                System.out.println("Eliminación cancelada.");
             }
-        } else {
-            System.out.println("Eliminación cancelada.");
+
+        } catch (Exception e) {
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
         }
-
-    } catch (Exception e) {
-        System.out.println("Error al eliminar cliente: " + e.getMessage());
     }
-}
-
 
     // ================= submenu: gestion de venas =================
-    
     // este menu permite registrar y listar ventas
     private void menuVentas() {
         int opcion;
@@ -587,7 +636,6 @@ public class MenuPrincipal {
     }
 
     // ================= submenu:reportes =================
-    
     // este menu muestra reportes usando stream api
     private void menuReportes() {
         int opcion;
