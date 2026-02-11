@@ -122,3 +122,5 @@ public class ClienteControlador {
     }
 
 }
+
+// ya con esto confirmo finalizado el proyecto y doy paso a implementar correctamente el readme
