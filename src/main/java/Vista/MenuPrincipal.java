@@ -1,6 +1,7 @@
 package Vista;
 
 // controladores que conectan la vista (lo que se ve) con la logica del sistema
+import Controlador.AlertaStockService;
 import Controlador.CelularControlador;
 import Controlador.ClienteControlador;
 import Controlador.VentaControlador;
@@ -653,7 +654,7 @@ public class MenuPrincipal {
             switch (opcion) {
                 case 1:
                     // llama al controlador para mostrar stock bajo (usa stream api filter)
-                    celularControlador.mostrarCelularesStockBajo();
+                    AlertaStockService.mostrarCelularesStockBajo();
                     break;
                 case 2:
                     // muestra top 3 mas vendidos (usa stream api sorted, limit)

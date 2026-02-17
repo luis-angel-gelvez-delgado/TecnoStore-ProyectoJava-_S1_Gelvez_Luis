@@ -10,37 +10,36 @@ import Persistencia.ClienteDB;
 import Persistencia.VentaDB;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
-
-
-
 
 // esta clase es la mas mamona, maneja ventas, reportes y archivos
 // coordina las acciones entre celulares, clientes y ventas
 public class VentaControlador {
 
-        // objetos para comunicarse con las diferentes tablas de la bd
+    // objetos para comunicarse con las diferentes tablas de la bd
     private VentaDB ventaDB;
     private CelularDB celularDB;
     private ClienteDB clienteDB;
 
-        // cuando se crea, inicializa las conexiones a las tres tablas
+    // cuando se crea, inicializa las conexiones a las tres tablas
     public VentaControlador() {
         ventaDB = new VentaDB();
         celularDB = new CelularDB();
         clienteDB = new ClienteDB();
     }
-
-
 
 // metodo principal para registrar una venta
     // puede vender varios celulares a la vez
@@ -66,7 +65,7 @@ public class VentaControlador {
             // buscar el celular en la base de datos
             Celular celular = celularDB.buscarPorId(idCelular);
 
-                        // validacion: verificar que el celular exista
+            // validacion: verificar que el celular exista
             if (celular == null) {
                 System.out.println("error: celular con ID " + idCelular + " no encontrado");
                 continue;// si no existe, pasa al siguiente
@@ -82,8 +81,6 @@ public class VentaControlador {
             // calcular el subtotal de este item (precio * cantidad)
             double subtotal = celular.getPrecio() * cantidad;
             ItemVenta item = new ItemVenta(celular, cantidad, subtotal);
-
-
 
             // agregar el item a la venta
             // esto automaticamente calcula el total con iva del 19%
@@ -103,8 +100,7 @@ public class VentaControlador {
         // guardar la venta completa en la base de datos
         ventaDB.guardarVenta(venta);
 
-        
-                // mostrar resumen de la venta en consola
+        // mostrar resumen de la venta en consola
         System.out.println("\n=== VENTA REGISTRADA ===");
         System.out.println("Cliente: " + cliente.getNombre());
         System.out.println("Fecha: " + venta.getFecha());
@@ -112,11 +108,10 @@ public class VentaControlador {
         System.out.println("========================\n");
     }
 
-
 // metodo para mostrar los 3 celulares mas vendidos (reporte)
     // usa stream api para hacer calculos complejos de forma eficiente
     public void mostrarTop3MasVendidos() {
-               // traer todas las ventas de la base de datos
+        // traer todas las ventas de la base de datos
         List<Venta> ventas = ventaDB.obtenerTodasLasVentas();
 
         if (ventas.isEmpty()) {
@@ -124,23 +119,20 @@ public class VentaControlador {
             return;
         }
 
-
 // crear un mapa para contar cuantos de cada celular se vendieron
         // clave: nombre del celular, valor: cantidad total vendida
         Map<String, Integer> ventasPorCelular = new HashMap<>();
-
 
 // recorrer todas las ventas y contar los celulares vendidos
         // flatMap "aplana" todas las listas de items en una sola
         ventas.stream()
                 .flatMap(v -> v.getItems().stream())// convierte lista de ventas en lista de items
                 .forEach(item -> {
-                                        // crear el nombre completo del celular
+                    // crear el nombre completo del celular
                     String nombreCelular = item.getCelular().getMarca().getNombre()
                             + " " + item.getCelular().getModelo();
-                   
-                    
-                                        // merge suma las cantidades si el celular ya esta en el mapa
+
+                    // merge suma las cantidades si el celular ya esta en el mapa
                     ventasPorCelular.merge(nombreCelular, item.getCantidad(), Integer::sum);
                 });
 
@@ -157,7 +149,6 @@ public class VentaControlador {
         System.out.println("=====================================\n");
     }
 
-
 // metodo para mostrar las ventas totales agrupadas por mes (reporte)
     // tambien usa stream api para agrupar y sumar
     public void mostrarVentasPorMes() {
@@ -170,8 +161,6 @@ public class VentaControlador {
 
         System.out.println("\n=== VENTAS TOTALES POR MES ===");
 
-        
-        
         // agrupar ventas por mes y sumar los totales
         // collectors.groupingby agrupa segun un criterio (el mes)
         // collectors.summingdouble suma los valores de cada grupo
@@ -192,7 +181,7 @@ public class VentaControlador {
         System.out.println("===============================\n");
     }
 
- // metodo para generar un archivo de texto con el reporte de ventas
+    // metodo para generar un archivo de texto con el reporte de ventas
     // usa bufferedwriter para escribir de forma eficiente
     public void generarReporteVentasTxt() {
         List<Venta> ventas = ventaDB.obtenerTodasLasVentas();
@@ -204,14 +193,13 @@ public class VentaControlador {
 
         String nombreArchivo = "reporte_ventas.txt";
 
-        
         // try-with-resources: cierra automaticamente el archivo al terminar
         // esto evita errores de archivos abiertos
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
 
-                        // escribir encabezado del reporte
+            // escribir encabezado del reporte
             writer.write("========================================\n");
-            writer.write("       REPORTE DE VENTAS - TECNOSTORE\n");
+            writer.write("       REPORTE DE CELULARES CON STOCK BAJO - TECNOSTORE\n");
             writer.write("========================================\n");
             writer.write("Fecha de generacion: " + LocalDate.now() + "\n");
             writer.write("Total de ventas: " + ventas.size() + "\n");
@@ -219,42 +207,22 @@ public class VentaControlador {
 
             double totalGeneral = 0;
 
-            
-                        // escribir cada venta con sus detalles
-            for (Venta venta : ventas) {
-                writer.write("----------------------------------------\n");
-                writer.write("Venta ID: " + venta.getId() + "\n");
-                writer.write("Cliente: " + venta.getCliente().getNombre() + "\n");
-                writer.write("Fecha: " + venta.getFecha() + "\n");
-                writer.write("Items vendidos:\n");
-
-                
-                                // escribir cada item de la venta
-                for (ItemVenta item : venta.getItems()) {
-                    writer.write("  - " + item.getCelular().getMarca().getNombre()
-                            + " " + item.getCelular().getModelo()
-                            + " | Cantidad: " + item.getCantidad()
-                            + " | Subtotal: $" + String.format("%.2f", item.getSubtotal()) + "\n");
+            // escribir cada venta con sus detalles
+            // escribir el total general al final
+            writer.write("========================================\n");
+            List<Celular> lista = new ArrayList<>();
+            try (Scanner sc = new Scanner(new File("archivo.txt"))) {
+                while (sc.hasNextLine()) {
                 }
-
-                writer.write("TOTAL (con iva): $" + String.format("%.2f", venta.getTotal()) + "\n");
-                writer.write("----------------------------------------\n\n");
-
-                
-                                // ir sumando el total general de todas las ventas
-                totalGeneral += venta.getTotal();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-
-                        // escribir el total general al final
-            writer.write("========================================\n");
-            writer.write("TOTAL GENERAL: $" + String.format("%.2f", totalGeneral) + "\n");
-            writer.write("========================================\n");
 
             System.out.println("Reporte generado exitosamente: " + nombreArchivo);
 
         } catch (IOException e) {
-            
-                        // si hay error al escribir el archivo, mostrar mensaje
+
+            // si hay error al escribir el archivo, mostrar mensaje
             System.out.println("Error al generar el archivo de reporte: " + e.getMessage());
         }
     }
@@ -276,10 +244,8 @@ public class VentaControlador {
 
     }
 
-    
     // metodo auxiliar para obtener la lista de ventas
     // lo usa la vista para mostrar con formato
-
     public List<Venta> obtenerListaVentas() {
         return ventaDB.obtenerTodasLasVentas();
     }

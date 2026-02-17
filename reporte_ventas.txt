@@ -1,8 +1,8 @@
 ========================================
        REPORTE DE VENTAS - TECNOSTORE
 ========================================
-Fecha de generacion: 2026-02-10
-Total de ventas: 11
+Fecha de generacion: 2026-02-13
+Total de ventas: 13
 ========================================
 
 ----------------------------------------
@@ -107,6 +107,24 @@ Items vendidos:
 TOTAL (con iva): $6188000,00
 ----------------------------------------
 
+----------------------------------------
+Venta ID: 12
+Cliente: Carlos Rodriguez
+Fecha: 2026-02-10
+Items vendidos:
+  - POL 32 | Cantidad: 2 | Subtotal: $684864846,00
+TOTAL (con iva): $814989166,74
+----------------------------------------
+
+----------------------------------------
+Venta ID: 13
+Cliente: Carlos Rodriguez
+Fecha: 2026-02-13
+Items vendidos:
+  - Xiaomi Redmi 13C | Cantidad: 4 | Subtotal: $2400000,00
+TOTAL (con iva): $2856000,00
+----------------------------------------
+
 ========================================
-TOTAL GENERAL: $73543500,00
+TOTAL GENERAL: $891388666,74
 ========================================

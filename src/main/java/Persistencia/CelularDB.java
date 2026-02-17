@@ -46,7 +46,7 @@ public class CelularDB {
     }
 
     // metodo para traer todos los celulares de la base de datos
-    public List<Celular> obtenerCelulares() {
+    public static List<Celular> obtenerCelulares() {
 
         // lista vacia donde se guardaran los celulares
         List<Celular> lista = new ArrayList<>();

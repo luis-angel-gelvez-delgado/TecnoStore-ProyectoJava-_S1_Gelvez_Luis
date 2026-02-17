@@ -123,33 +123,7 @@ public class CelularControlador {
         }
     }
 
-    // metodo para mostrar celulares con poco stock (reporte)
-    public void mostrarCelularesStockBajo() {
-
-        // trae todos los celulares
-        List<Celular> todos = celularDB.obtenerCelulares();
-
-        System.out.println("\n=== CELULARES CON STOCK BAJO (menos de 5 unidades) ===");
-
-        // usa stream api para filtrar solo los que tienen menos de 5 en stock
-        // esto es programacion funcional, mas eficiente que un for tradicional
-        List<Celular> stockBajo = todos.stream()
-                .filter(c -> c.getStock() < 5)// filtra: solo los que cumplen la condicion
-
-                .toList();// convierte el resultado en una lista
-
-        // si no hay celulares con stock bajo, avisa
-        if (stockBajo.isEmpty()) {
-            System.out.println("no hay celulares con stock bajo");
-        } else {
-
-            // recorre y muestra cada celular con stock bajo
-            stockBajo.forEach(c
-                    -> System.out.println(c.getMarca().getNombre() + " " + c.getModelo()
-                            + " - Stock: " + c.getStock())
-            );
-        }
-    }
+    
 
     // metodo auxiliar que devuelve la lista de celulares
     // lo usa la vista para mostrar los celulares con formato
